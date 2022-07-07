@@ -155,18 +155,18 @@ abstract contract VotesRank is IVotesRank, Context, EIP712 {
      * @dev Moves delegated votes from one delegate to another.
      */
     function _moveDelegateVotes(
-        address[] from,
-        address[] to,
+        address[] memory from,
+        address[] memory to,
         uint256 amount
     ) private {
         //TODO
-        if (from != to && amount > 0) {
-            if (from != address(0)) {
-                (uint256 oldValue, uint256 newValue) = _delegateCheckpoints[from].push(_subtract, amount);
+        if (from[0] != to[0] && amount > 0) {
+            if (from[0] != address(0)) {
+                (uint256 oldValue, uint256 newValue) = _delegateCheckpoints[from[0]].push(_subtract, amount);
                 emit DelegatesVotesChanged(from, oldValue, newValue);
             }
-            if (to != address(0)) {
-                (uint256 oldValue, uint256 newValue) = _delegateCheckpoints[to].push(_add, amount);
+            if (to[0] != address(0)) {
+                (uint256 oldValue, uint256 newValue) = _delegateCheckpoints[to[0]].push(_add, amount);
                 emit DelegatesVotesChanged(to, oldValue, newValue);
             }
         }
